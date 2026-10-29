@@ -1,0 +1,26 @@
+classDiagram
+    class MediadorChat {
+        <<interface>>
+        +registrar(Participante)
+        +enviar(String, Participante)
+    }
+    class SalaChat {
+        -List~Participante~ participantes
+        +registrar(Participante)
+        +enviar(String, Participante)
+    }
+    class Participante {
+        -String nome
+        -MediadorChat mediador
+        -List~String~ caixaDeEntrada
+        +enviar(String)
+        +getMensagensRecebidas() List~String~
+    }
+    class Main {
+        +main(String[])
+    }
+    MediadorChat <|.. SalaChat
+    SalaChat o--> "0..*" Participante : registra e coordena
+    Participante --> MediadorChat : envia pelo mediador
+    Main --> SalaChat : cria
+    Main --> Participante : registra e usa
